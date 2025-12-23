@@ -1,1 +1,1321 @@
-<img src="https://raw.githubusercontent.com/equiroga8/equiroga8.github.io/main/traviesa.jpeg" alt="Traviesa">
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Son Liman - The Final Harbor</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans+JP:wght@300;400;500&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sunset-purple: #7b6b8d;
+            --sunset-orange: #e8945a;
+            --sunset-pink: #d4a5b9;
+            --sunset-gold: #f0c87d;
+            --deep-navy: #1a1a2e;
+            --text-light: #fff8f0;
+            --success-green: #4a9c6d;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(180deg,
+                #7b6b8d 0%,
+                #a88b9c 20%,
+                #d4a5b9 35%,
+                #e8945a 55%,
+                #f0c87d 75%,
+                #e8945a 100%
+            );
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            font-family: 'Cormorant Garamond', serif;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://raw.githubusercontent.com/equiroga8/equiroga8.github.io/main/sanblas.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(26, 26, 46, 0.2);
+            z-index: 1;
+        }
+
+        .water-shimmer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            background: linear-gradient(180deg,
+                transparent 0%,
+                rgba(240, 200, 125, 0.05) 50%,
+                rgba(240, 200, 125, 0.1) 100%
+            );
+            z-index: 2;
+            pointer-events: none;
+            animation: shimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .card {
+            background: linear-gradient(145deg,
+                rgba(255, 248, 240, 0.94) 0%,
+                rgba(244, 228, 210, 0.96) 50%,
+                rgba(232, 212, 190, 0.94) 100%
+            );
+            border-radius: 12px;
+            box-shadow:
+                0 20px 60px rgba(26, 26, 46, 0.4),
+                0 0 0 1px rgba(240, 200, 125, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
+        }
+
+        .hidden { display: none !important; }
+
+        /* Password Screen */
+        .password-screen {
+            max-width: 380px;
+            width: 100%;
+            padding: 45px 35px;
+            text-align: center;
+        }
+
+        .lock-icon {
+            font-size: 52px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .password-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--deep-navy);
+            margin-bottom: 8px;
+        }
+
+        .password-subtitle {
+            font-size: 15px;
+            color: var(--sunset-purple);
+            margin-bottom: 35px;
+            font-style: italic;
+        }
+
+        .password-input-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .password-digit {
+            width: 54px;
+            height: 64px;
+            border: 2px solid var(--sunset-purple);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--deep-navy);
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .password-digit:focus {
+            border-color: var(--sunset-orange);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 20px rgba(232, 148, 90, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .password-digit.error {
+            border-color: #c44;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--sunset-purple) 0%, #5a4a6a 100%);
+            border: none;
+            color: var(--text-light);
+            padding: 14px 50px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            box-shadow: 0 4px 15px rgba(123, 107, 141, 0.4);
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, var(--sunset-orange) 0%, #d07a40 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(232, 148, 90, 0.5);
+        }
+
+        .password-error {
+            color: #c44;
+            font-size: 14px;
+            margin-top: 18px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .password-error.visible { opacity: 1; }
+
+        .lang-toggle-small {
+            margin-top: 25px;
+        }
+
+        .lang-toggle-small button,
+        .language-toggle button {
+            background: transparent;
+            border: 1px solid var(--sunset-purple);
+            color: var(--sunset-purple);
+            padding: 8px 16px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .lang-toggle-small button:hover,
+        .language-toggle button:hover {
+            background: var(--sunset-purple);
+            color: var(--text-light);
+        }
+
+        /* Word Search Screen */
+        .wordsearch-screen {
+            max-width: 420px;
+            width: 100%;
+            padding: 25px 20px;
+        }
+
+        .wordsearch-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-top: 10px;
+        }
+
+        .wordsearch-icon {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
+
+        .wordsearch-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--deep-navy);
+            margin-bottom: 4px;
+        }
+
+        .wordsearch-subtitle {
+            font-size: 13px;
+            color: var(--sunset-purple);
+            font-style: italic;
+        }
+
+        .language-toggle {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                var(--sunset-orange) 20%,
+                var(--sunset-gold) 50%,
+                var(--sunset-orange) 80%,
+                transparent 100%
+            );
+            margin: 15px 0;
+        }
+
+        /* Word Search Grid */
+        .grid-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .word-grid {
+            display: grid;
+            gap: 4px;
+            background: rgba(123, 107, 141, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid var(--sunset-purple);
+        }
+
+        .grid-cell {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--deep-navy);
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-transform: uppercase;
+        }
+
+        .grid-cell.selecting {
+            background: var(--sunset-gold);
+            transform: scale(1.1);
+        }
+
+        .grid-cell.found {
+            background: linear-gradient(135deg, var(--success-green) 0%, #5cb87a 100%);
+            color: white;
+        }
+
+        .grid-cell.first-letter.found {
+            background: linear-gradient(135deg, var(--sunset-orange) 0%, #d07a40 100%);
+            box-shadow: 0 0 8px rgba(232, 148, 90, 0.5);
+        }
+
+        /* Word List */
+        .word-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .word-item {
+            padding: 6px 12px;
+            background: rgba(123, 107, 141, 0.1);
+            border: 2px solid var(--sunset-purple);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--deep-navy);
+            transition: all 0.3s ease;
+        }
+
+        .word-item.found {
+            background: linear-gradient(135deg, var(--success-green) 0%, #5cb87a 100%);
+            border-color: var(--success-green);
+            color: white;
+            text-decoration: line-through;
+        }
+
+        /* Riddle Section */
+        .riddle-section {
+            background: linear-gradient(135deg,
+                rgba(123, 107, 141, 0.12) 0%,
+                rgba(232, 148, 90, 0.08) 100%
+            );
+            border: 2px solid var(--sunset-orange);
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .riddle-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--sunset-purple);
+            margin-bottom: 10px;
+        }
+
+        .riddle-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--deep-navy);
+            line-height: 1.5;
+        }
+
+        .riddle-word {
+            display: inline-block;
+            min-width: 24px;
+            border-bottom: 3px solid var(--sunset-orange);
+            margin: 0 2px;
+            padding: 0 4px;
+            transition: all 0.5s ease;
+        }
+
+        .riddle-word.revealed {
+            border-bottom-color: var(--success-green);
+            color: var(--success-green);
+            animation: revealWord 0.6s ease;
+        }
+
+        @keyframes revealWord {
+            0% { transform: scale(1.3); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .riddle-hidden {
+            color: var(--sunset-purple);
+            font-style: italic;
+        }
+
+        .riddle-revealed {
+            color: var(--success-green);
+            font-weight: 700;
+            animation: revealMessage 0.8s ease-out;
+        }
+
+        @keyframes revealMessage {
+            0% { opacity: 0; transform: scale(0.9); }
+            50% { transform: scale(1.02); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .riddle-text .progress {
+            display: inline-block;
+            font-size: 14px;
+            color: var(--sunset-orange);
+            font-weight: 700;
+            margin-left: 6px;
+        }
+
+        .riddle-text.complete {
+            background: linear-gradient(135deg,
+                rgba(74, 156, 109, 0.15) 0%,
+                rgba(92, 184, 122, 0.1) 100%
+            );
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 8px;
+        }
+
+        /* Instructions */
+        .instructions {
+            text-align: center;
+            font-size: 12px;
+            color: var(--sunset-purple);
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        /* Reveal Screen */
+        .reveal-container {
+            max-width: 480px;
+            width: 100%;
+        }
+
+        .reveal-card {
+            padding: 40px 30px;
+            overflow: hidden;
+        }
+
+        .reveal-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(240, 200, 125, 0.1) 0%, transparent 60%);
+            animation: glow 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes glow {
+            0%, 100% { transform: translate(-10%, -10%); }
+            50% { transform: translate(10%, 10%); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-top: 20px;
+        }
+
+        .celebration-icon {
+            font-size: 56px;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .header-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--deep-navy);
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .header-subtitle {
+            font-size: 16px;
+            color: var(--sunset-purple);
+            font-style: italic;
+        }
+
+        .message-body {
+            color: var(--deep-navy);
+            font-size: 17px;
+            line-height: 1.9;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .message-body p { margin-bottom: 18px; }
+
+        .whiskey-reveal {
+            background: linear-gradient(135deg,
+                rgba(123, 107, 141, 0.15) 0%,
+                rgba(232, 148, 90, 0.1) 100%
+            );
+            border: 2px solid var(--sunset-orange);
+            border-radius: 12px;
+            padding: 25px 20px;
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .whiskey-reveal::before,
+        .whiskey-reveal::after {
+            content: '🥃';
+            position: absolute;
+            font-size: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .whiskey-reveal::before { left: 12px; }
+        .whiskey-reveal::after { right: 12px; }
+
+        .whiskey-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--sunset-orange);
+            margin-bottom: 8px;
+        }
+
+        .whiskey-subtitle {
+            font-size: 14px;
+            color: var(--sunset-purple);
+            font-style: italic;
+        }
+
+        .story-connection {
+            background: rgba(26, 26, 46, 0.05);
+            border-left: 4px solid var(--sunset-purple);
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .story-connection p {
+            font-size: 15px;
+            color: var(--deep-navy);
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        /* Final Riddle on Reveal Screen */
+        .final-riddle {
+            background: linear-gradient(135deg,
+                rgba(232, 148, 90, 0.12) 0%,
+                rgba(240, 200, 125, 0.08) 100%
+            );
+            border: 3px solid var(--sunset-orange);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .final-riddle .riddle-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--sunset-orange);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .riddle-quote {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a2e;
+            line-height: 1.6;
+            font-style: italic;
+            text-shadow: 0 0 1px rgba(0,0,0,0.1);
+        }
+
+        /* Photo Frame */
+        .photo-frame-container {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .photo-frame {
+            display: inline-block;
+            padding: 8px;
+            background: linear-gradient(135deg, #8b7355 0%, #a08060 50%, #6b5344 100%);
+            border-radius: 4px;
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2),
+                inset 0 -1px 0 rgba(0,0,0,0.3);
+        }
+
+        .photo-frame img {
+            display: block;
+            width: 180px;
+            height: auto;
+            border-radius: 2px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        .frame-hint {
+            margin-top: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--sunset-orange);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .closing-message {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(123, 107, 141, 0.3);
+        }
+
+        .closing-message .signature {
+            font-size: 20px;
+            color: var(--sunset-orange);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .closing-message .date {
+            font-size: 14px;
+            color: var(--sunset-purple);
+        }
+
+        .hearts {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            font-size: 24px;
+        }
+
+        .hearts span {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .hearts span:nth-child(2) { animation-delay: 0.2s; }
+        .hearts span:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .jp-accent {
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 300;
+        }
+
+        .tr-content { display: block; }
+        .en-content { display: none; }
+
+        body.en .tr-content { display: none; }
+        body.en .en-content { display: block; }
+
+        /* Responsive */
+        @media (max-width: 380px) {
+            .wordsearch-screen { padding: 20px 15px; }
+            .grid-cell { width: 28px; height: 28px; font-size: 14px; }
+            .word-grid { gap: 3px; padding: 8px; }
+            .password-digit { width: 48px; height: 58px; font-size: 26px; }
+            .reveal-card { padding: 30px 20px; }
+            .header-title { font-size: 24px; }
+            .celebration-icon { font-size: 48px; }
+            .whiskey-reveal::before, .whiskey-reveal::after { display: none; }
+        }
+
+        /* Dark mode */
+        @media (prefers-color-scheme: dark) {
+            .card {
+                background: linear-gradient(145deg,
+                    rgba(40, 35, 50, 0.96) 0%,
+                    rgba(50, 45, 60, 0.96) 50%,
+                    rgba(45, 40, 55, 0.96) 100%
+                );
+            }
+
+            .password-title, .wordsearch-title, .header-title,
+            .message-body, .riddle-text, .word-item {
+                color: var(--text-light);
+            }
+
+            .password-subtitle, .wordsearch-subtitle, .header-subtitle {
+                color: var(--sunset-pink);
+            }
+
+            .password-digit {
+                background: rgba(60, 55, 70, 0.8);
+                border-color: var(--sunset-pink);
+                color: var(--text-light);
+            }
+
+            .password-digit:focus {
+                background: rgba(80, 75, 90, 0.9);
+            }
+
+            .grid-cell {
+                background: rgba(60, 55, 70, 0.8);
+                color: var(--text-light);
+            }
+
+            .grid-cell.selecting {
+                background: var(--sunset-gold);
+                color: var(--deep-navy);
+            }
+
+            .word-item {
+                background: rgba(255, 255, 255, 0.05);
+                border-color: var(--sunset-pink);
+            }
+
+            .story-connection {
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            .story-connection p {
+                color: var(--text-light);
+            }
+
+            .lang-toggle-small button, .language-toggle button {
+                border-color: var(--sunset-pink);
+                color: var(--sunset-pink);
+            }
+
+            .lang-toggle-small button:hover, .language-toggle button:hover {
+                background: var(--sunset-pink);
+                color: var(--deep-navy);
+            }
+
+            .riddle-hidden {
+                color: var(--sunset-pink);
+            }
+
+            .riddle-text.complete {
+                background: linear-gradient(135deg,
+                    rgba(74, 156, 109, 0.2) 0%,
+                    rgba(92, 184, 122, 0.15) 100%
+                );
+            }
+
+            .riddle-quote {
+                color: var(--text-light);
+            }
+
+            .final-riddle {
+                background: linear-gradient(135deg,
+                    rgba(232, 148, 90, 0.2) 0%,
+                    rgba(240, 200, 125, 0.12) 100%
+                );
+            }
+
+            .frame-hint {
+                color: var(--sunset-gold);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="water-shimmer"></div>
+
+    <!-- Password Screen -->
+    <div class="password-screen card" id="passwordScreen">
+        <div class="lock-icon">🗝️</div>
+        <div class="password-title">
+            <span class="tr-content">Bulmaca Odası</span>
+            <span class="en-content">Puzzle Chamber</span>
+        </div>
+        <div class="password-subtitle">
+            <span class="tr-content">Erişim için şifreyi giriniz</span>
+            <span class="en-content">Enter the code to access</span>
+        </div>
+
+        <div class="password-input-container">
+            <input type="tel" class="password-digit" maxlength="1" id="digit1" inputmode="numeric" pattern="[0-9]*">
+            <input type="tel" class="password-digit" maxlength="1" id="digit2" inputmode="numeric" pattern="[0-9]*">
+            <input type="tel" class="password-digit" maxlength="1" id="digit3" inputmode="numeric" pattern="[0-9]*">
+            <input type="tel" class="password-digit" maxlength="1" id="digit4" inputmode="numeric" pattern="[0-9]*">
+        </div>
+
+        <button class="btn" id="passwordBtn">
+            <span class="tr-content">Giriş</span>
+            <span class="en-content">Enter</span>
+        </button>
+
+        <div class="password-error" id="passwordError">
+            <span class="tr-content">Yanlış şifre. Tekrar deneyiniz.</span>
+            <span class="en-content">Incorrect code. Please try again.</span>
+        </div>
+
+        <div class="lang-toggle-small">
+            <button id="langToggle1">
+                <span class="tr-content">English</span>
+                <span class="en-content">Türkçe</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Word Search Screen -->
+    <div class="wordsearch-screen card hidden" id="wordsearchScreen">
+        <div class="language-toggle">
+            <button id="langToggle2">
+                <span class="tr-content">EN</span>
+                <span class="en-content">TR</span>
+            </button>
+        </div>
+
+        <div class="wordsearch-header">
+            <div class="wordsearch-icon">🔍</div>
+            <div class="wordsearch-title">
+                <span class="tr-content">Ertuğrul Kelime Avı</span>
+                <span class="en-content">Ertuğrul Word Hunt</span>
+            </div>
+            <div class="wordsearch-subtitle">
+                <span class="tr-content">Gizli kelimeleri bul, mesajı aç</span>
+                <span class="en-content">Find the hidden words, unlock the message</span>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="instructions">
+            <span class="tr-content">Kelimeyi seçmek için harfleri sürükleyin</span>
+            <span class="en-content">Drag across letters to select a word</span>
+        </div>
+
+        <div class="grid-container">
+            <div class="word-grid" id="wordGrid"></div>
+        </div>
+
+        <div class="word-list" id="wordList"></div>
+
+        <div class="riddle-section">
+            <div class="riddle-label">
+                <span class="tr-content">🔍 Gizli Mesaj</span>
+                <span class="en-content">🔍 Hidden Message</span>
+            </div>
+            <div class="riddle-text" id="riddleText"></div>
+        </div>
+    </div>
+
+    <!-- Reveal Screen -->
+    <div class="reveal-container hidden" id="revealContainer">
+        <div class="reveal-card card">
+            <div class="language-toggle">
+                <button id="langToggle3">
+                    <span class="tr-content">EN</span>
+                    <span class="en-content">TR</span>
+                </button>
+            </div>
+
+            <div class="header">
+                <div class="celebration-icon">⚓</div>
+                <div class="header-title">
+                    <span class="tr-content">Yolculuk Tamamlandı</span>
+                    <span class="en-content">Journey Complete</span>
+                </div>
+                <div class="header-subtitle">
+                    <span class="tr-content">Geminin son limanına hoş geldiniz</span>
+                    <span class="en-content">Welcome to the ship's final port</span>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- 1. Ertuğrul Story Quote First -->
+            <div class="story-connection">
+                <p class="tr-content">
+                    1890'da Ertuğrul fırkateyninin denizcileri Japon köylüler tarafından
+                    kurtarıldığında, iki ulus arasında sonsuza dek sürecek bir dostluk doğdu.
+                </p>
+                <p class="en-content">
+                    When the sailors of the Ertuğrul frigate were rescued by Japanese villagers
+                    in 1890, an eternal friendship was born between two nations.
+                </p>
+            </div>
+
+            <!-- 2. Riddle in Orange Border -->
+            <div class="final-riddle">
+                <div class="riddle-label">
+                    <span class="tr-content">✨ Son İpucu ✨</span>
+                    <span class="en-content">✨ Final Clue ✨</span>
+                </div>
+                <div class="riddle-quote">
+                    <span class="tr-content">İki ruh, tek kucaklaşma, ayaklarında ada dalgaları. Bu donmuş anın arkasında, yolculuğun tamamlanıyor.</span>
+                    <span class="en-content">Two souls, one embrace, island waves at their feet. Behind this frozen moment, your journey is complete.</span>
+                </div>
+            </div>
+
+            <!-- 3. Small Image with Frame -->
+            <div class="photo-frame-container">
+                <div class="photo-frame">
+                    <img src="https://raw.githubusercontent.com/equiroga8/equiroga8.github.io/main/sanblas.png" alt="San Blas Sunset">
+                </div>
+            </div>
+
+            <div class="closing-message">
+                <div class="signature">
+                    <span class="tr-content">Mutlu Yıllar! 🎄</span>
+                    <span class="en-content">Merry Christmas! 🎄</span>
+                </div>
+                <div class="date">
+                    <span class="tr-content">Noel 2025, Chelmsford, UK</span>
+                    <span class="en-content">Christmas 2025, Chelmsford, UK</span>
+                </div>
+                <div class="hearts">
+                    <span>🇹🇷</span>
+                    <span>❤️</span>
+                    <span>🇯🇵</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dark mode detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            document.documentElement.classList.toggle('dark', event.matches);
+        });
+
+        // Puzzle data for both languages
+        const puzzleData = {
+            tr: {
+                gridSize: 10,
+                words: [
+                    { word: 'ERTUĞRUL', row: 2, col: 1, dir: 'H' },
+                    { word: 'KUSHIMOTO', row: 0, col: 0, dir: 'H' },
+                    { word: 'KURTARMA', row: 4, col: 0, dir: 'H' },
+                    { word: 'GEMİCİLER', row: 6, col: 0, dir: 'H' },
+                    { word: 'DOSTLUK', row: 1, col: 9, dir: 'V' },
+                    { word: 'ÇERÇEVE', row: 8, col: 2, dir: 'H' }
+                ],
+                grid: [
+                    ['K', 'U', 'S', 'H', 'I', 'M', 'O', 'T', 'O', 'Y'],
+                    ['A', 'B', 'C', 'N', 'E', 'F', 'G', 'H', 'J', 'D'],
+                    ['P', 'E', 'R', 'T', 'U', 'Ğ', 'R', 'U', 'L', 'O'],
+                    ['Q', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'S'],
+                    ['K', 'U', 'R', 'T', 'A', 'R', 'M', 'A', 'Ş', 'T'],
+                    ['D', 'F', 'G', 'H', 'J', 'L', 'N', 'P', 'Q', 'L'],
+                    ['G', 'E', 'M', 'İ', 'C', 'İ', 'L', 'E', 'R', 'U'],
+                    ['V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'K'],
+                    ['F', 'H', 'Ç', 'E', 'R', 'Ç', 'E', 'V', 'E', 'N'],
+                    ['J', 'L', 'M', 'N', 'P', 'Q', 'S', 'T', 'V', 'W']
+                ],
+                riddleHidden: 'Tüm kelimeleri bul ve gizli mesajı aç...',
+                riddleRevealed: 'İki ruh, tek kucaklaşma, ayaklarında ada dalgaları. Bu donmuş anın arkasında, yolculuğun tamamlanıyor.'
+            },
+            en: {
+                gridSize: 10,
+                words: [
+                    { word: 'ERTUĞRUL', row: 2, col: 1, dir: 'H' },
+                    { word: 'KUSHIMOTO', row: 4, col: 1, dir: 'H' },
+                    { word: 'RESCUE', row: 1, col: 0, dir: 'V' },
+                    { word: 'SAILORS', row: 6, col: 2, dir: 'H' },
+                    { word: 'FRIENDSHIP', row: 0, col: 0, dir: 'H' },
+                    { word: 'FRAME', row: 8, col: 3, dir: 'H' }
+                ],
+                grid: [
+                    ['F', 'R', 'I', 'E', 'N', 'D', 'S', 'H', 'I', 'P'],
+                    ['R', 'A', 'B', 'C', 'D', 'E', 'G', 'H', 'J', 'K'],
+                    ['E', 'E', 'R', 'T', 'U', 'Ğ', 'R', 'U', 'L', 'M'],
+                    ['S', 'L', 'N', 'P', 'Q', 'V', 'W', 'X', 'Y', 'Z'],
+                    ['C', 'K', 'U', 'S', 'H', 'I', 'M', 'O', 'T', 'O'],
+                    ['U', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N'],
+                    ['E', 'A', 'S', 'A', 'I', 'L', 'O', 'R', 'S', 'Q'],
+                    ['V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'F'],
+                    ['G', 'H', 'J', 'F', 'R', 'A', 'M', 'E', 'K', 'L'],
+                    ['N', 'P', 'Q', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z']
+                ],
+                riddleHidden: 'Find all the words to unlock the secret message...',
+                riddleRevealed: 'Two souls, one embrace, island waves at their feet. Behind this frozen moment, your journey is complete.'
+            }
+        };
+
+        let currentLang = 'tr';
+        let solvedWords = { tr: new Set(), en: new Set() };
+        let selectedCells = [];
+        let isSelecting = false;
+        const correctCode = '1890';
+
+        // DOM Elements
+        const passwordScreen = document.getElementById('passwordScreen');
+        const wordsearchScreen = document.getElementById('wordsearchScreen');
+        const revealContainer = document.getElementById('revealContainer');
+        const wordGrid = document.getElementById('wordGrid');
+        const wordList = document.getElementById('wordList');
+        const riddleText = document.getElementById('riddleText');
+
+        const digits = [
+            document.getElementById('digit1'),
+            document.getElementById('digit2'),
+            document.getElementById('digit3'),
+            document.getElementById('digit4')
+        ];
+
+        // Password system
+        digits.forEach((digit, index) => {
+            digit.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                if (e.target.value.length === 1 && index < 3) {
+                    digits[index + 1].focus();
+                }
+            });
+
+            digit.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+                    digits[index - 1].focus();
+                }
+                if (e.key === 'Enter') checkPassword();
+            });
+
+            digit.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const pastedData = e.clipboardData.getData('text').replace(/[^0-9]/g, '');
+                if (pastedData.length >= 4) {
+                    for (let i = 0; i < 4; i++) {
+                        digits[i].value = pastedData[i] || '';
+                    }
+                    digits[3].focus();
+                }
+            });
+        });
+
+        setTimeout(() => digits[0].focus(), 100);
+
+        function checkPassword() {
+            const enteredCode = digits.map(d => d.value).join('');
+            if (enteredCode === correctCode) {
+                passwordScreen.classList.add('hidden');
+                wordsearchScreen.classList.remove('hidden');
+                renderWordSearch();
+            } else {
+                document.getElementById('passwordError').classList.add('visible');
+                digits.forEach(d => { d.classList.add('error'); d.value = ''; });
+                digits[0].focus();
+                setTimeout(() => digits.forEach(d => d.classList.remove('error')), 500);
+            }
+        }
+
+        function toggleLanguage() {
+            document.body.classList.toggle('en');
+            currentLang = document.body.classList.contains('en') ? 'en' : 'tr';
+            if (!wordsearchScreen.classList.contains('hidden')) {
+                renderWordSearch();
+            }
+        }
+
+        function renderWordSearch() {
+            const data = puzzleData[currentLang];
+            const solved = solvedWords[currentLang];
+
+            // Render grid
+            wordGrid.innerHTML = '';
+            wordGrid.style.gridTemplateColumns = `repeat(${data.gridSize}, 1fr)`;
+
+            for (let row = 0; row < data.gridSize; row++) {
+                for (let col = 0; col < data.gridSize; col++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'grid-cell';
+                    cell.textContent = data.grid[row][col];
+                    cell.dataset.row = row;
+                    cell.dataset.col = col;
+
+                    // Check if this cell is part of a found word
+                    let isFound = false;
+                    let isFirstLetter = false;
+                    data.words.forEach((wordData, idx) => {
+                        if (solved.has(idx)) {
+                            for (let i = 0; i < wordData.word.length; i++) {
+                                const r = wordData.dir === 'H' ? wordData.row : wordData.row + i;
+                                const c = wordData.dir === 'H' ? wordData.col + i : wordData.col;
+                                if (r === row && c === col) {
+                                    isFound = true;
+                                    if (i === 0) isFirstLetter = true;
+                                }
+                            }
+                        }
+                    });
+
+                    if (isFound) {
+                        cell.classList.add('found');
+                        if (isFirstLetter) cell.classList.add('first-letter');
+                    }
+
+                    wordGrid.appendChild(cell);
+                }
+            }
+
+            // Add event listeners for selection
+            setupGridListeners();
+
+            // Render word list
+            wordList.innerHTML = '';
+            data.words.forEach((wordData, idx) => {
+                const item = document.createElement('div');
+                item.className = 'word-item' + (solved.has(idx) ? ' found' : '');
+                item.textContent = wordData.word;
+                wordList.appendChild(item);
+            });
+
+            // Render riddle
+            renderRiddle();
+        }
+
+        function setupGridListeners() {
+            const cells = wordGrid.querySelectorAll('.grid-cell');
+
+            cells.forEach(cell => {
+                cell.addEventListener('mousedown', startSelection);
+                cell.addEventListener('touchstart', startSelection, { passive: false });
+                cell.addEventListener('mouseenter', continueSelection);
+                cell.addEventListener('touchmove', handleTouchMove, { passive: false });
+            });
+
+            document.addEventListener('mouseup', endSelection);
+            document.addEventListener('touchend', endSelection);
+        }
+
+        function startSelection(e) {
+            e.preventDefault();
+            isSelecting = true;
+            selectedCells = [];
+            const cell = e.target.closest('.grid-cell');
+            if (cell) {
+                addToSelection(cell);
+            }
+        }
+
+        function continueSelection(e) {
+            if (!isSelecting) return;
+            const cell = e.target.closest('.grid-cell');
+            if (cell && !selectedCells.includes(cell)) {
+                // Check if valid continuation (adjacent)
+                if (selectedCells.length === 0 || isAdjacent(selectedCells[selectedCells.length - 1], cell)) {
+                    // Check if in a straight line
+                    if (isInLine(cell)) {
+                        addToSelection(cell);
+                    }
+                }
+            }
+        }
+
+        function handleTouchMove(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const cell = document.elementFromPoint(touch.clientX, touch.clientY);
+            if (cell && cell.classList.contains('grid-cell') && !selectedCells.includes(cell)) {
+                if (selectedCells.length === 0 || isAdjacent(selectedCells[selectedCells.length - 1], cell)) {
+                    if (isInLine(cell)) {
+                        addToSelection(cell);
+                    }
+                }
+            }
+        }
+
+        function isAdjacent(cell1, cell2) {
+            const r1 = parseInt(cell1.dataset.row);
+            const c1 = parseInt(cell1.dataset.col);
+            const r2 = parseInt(cell2.dataset.row);
+            const c2 = parseInt(cell2.dataset.col);
+            const dr = Math.abs(r2 - r1);
+            const dc = Math.abs(c2 - c1);
+            return dr <= 1 && dc <= 1 && (dr + dc > 0);
+        }
+
+        function isInLine(newCell) {
+            if (selectedCells.length < 2) return true;
+
+            const r0 = parseInt(selectedCells[0].dataset.row);
+            const c0 = parseInt(selectedCells[0].dataset.col);
+            const r1 = parseInt(selectedCells[1].dataset.row);
+            const c1 = parseInt(selectedCells[1].dataset.col);
+            const rN = parseInt(newCell.dataset.row);
+            const cN = parseInt(newCell.dataset.col);
+
+            const dr = r1 - r0;
+            const dc = c1 - c0;
+            const drN = rN - r0;
+            const dcN = cN - c0;
+
+            // Check if new cell follows the same direction
+            if (dr === 0 && drN === 0) return true; // Horizontal
+            if (dc === 0 && dcN === 0) return true; // Vertical
+            if (dr !== 0 && dc !== 0 && drN !== 0 && dcN !== 0) {
+                return (drN / dcN) === (dr / dc); // Diagonal
+            }
+            return false;
+        }
+
+        function addToSelection(cell) {
+            selectedCells.push(cell);
+            cell.classList.add('selecting');
+        }
+
+        function endSelection() {
+            if (!isSelecting) return;
+            isSelecting = false;
+
+            // Check if selected word matches
+            checkSelectedWord();
+
+            // Clear selection styling
+            selectedCells.forEach(cell => cell.classList.remove('selecting'));
+            selectedCells = [];
+        }
+
+        function checkSelectedWord() {
+            if (selectedCells.length < 2) return;
+
+            const selectedWord = selectedCells.map(c => c.textContent).join('');
+            const data = puzzleData[currentLang];
+            const solved = solvedWords[currentLang];
+
+            data.words.forEach((wordData, idx) => {
+                if (solved.has(idx)) return;
+
+                // Check forward and backward
+                if (selectedWord === wordData.word || selectedWord === wordData.word.split('').reverse().join('')) {
+                    // Verify positions match
+                    const firstCell = selectedCells[0];
+                    const lastCell = selectedCells[selectedCells.length - 1];
+
+                    const matchesForward = verifyWordPosition(selectedCells, wordData);
+                    const matchesBackward = verifyWordPosition([...selectedCells].reverse(), wordData);
+
+                    if (matchesForward || matchesBackward) {
+                        solved.add(idx);
+                        renderWordSearch();
+
+                        // Check if all words found
+                        if (solved.size === data.words.length) {
+                            setTimeout(() => {
+                                wordsearchScreen.classList.add('hidden');
+                                revealContainer.classList.remove('hidden');
+                                revealContainer.style.animation = 'fadeInUp 1s ease-out';
+                            }, 1200);
+                        }
+                    }
+                }
+            });
+        }
+
+        function verifyWordPosition(cells, wordData) {
+            if (cells.length !== wordData.word.length) return false;
+
+            for (let i = 0; i < cells.length; i++) {
+                const r = parseInt(cells[i].dataset.row);
+                const c = parseInt(cells[i].dataset.col);
+                const expectedR = wordData.dir === 'H' ? wordData.row : wordData.row + i;
+                const expectedC = wordData.dir === 'H' ? wordData.col + i : wordData.col;
+                if (r !== expectedR || c !== expectedC) return false;
+            }
+            return true;
+        }
+
+        function renderRiddle() {
+            const data = puzzleData[currentLang];
+            const solved = solvedWords[currentLang];
+            const allSolved = solved.size === data.words.length;
+
+            if (allSolved) {
+                riddleText.innerHTML = `<span class="riddle-revealed">${data.riddleRevealed}</span>`;
+                riddleText.classList.add('complete');
+            } else {
+                const progress = `(${solved.size}/${data.words.length})`;
+                riddleText.innerHTML = `<span class="riddle-hidden">${data.riddleHidden}</span> <span class="progress">${progress}</span>`;
+                riddleText.classList.remove('complete');
+            }
+        }
+
+        // Event listeners
+        document.getElementById('passwordBtn').addEventListener('click', checkPassword);
+        document.getElementById('langToggle1').addEventListener('click', toggleLanguage);
+        document.getElementById('langToggle2').addEventListener('click', toggleLanguage);
+        document.getElementById('langToggle3').addEventListener('click', toggleLanguage);
+
+        // Fade in animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(30px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
+
